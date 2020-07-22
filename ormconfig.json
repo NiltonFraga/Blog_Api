@@ -4,7 +4,7 @@
    "port": 5432,
    "username": "postgres",
    "password": "postgres",
-   "database": "auth_api",
+   "database": "Blog_Api",
    "synchronize": true,
    "logging": false,
    "entities": [

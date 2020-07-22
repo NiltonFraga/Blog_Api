@@ -47,8 +47,6 @@ export class UserRepository{
 
         const hash = await bcrypt.hash(user.password, 8);
 
-        console.log(user)
-
         const newUser = await context(User).save({
             name: user.name,
             email: user.email,

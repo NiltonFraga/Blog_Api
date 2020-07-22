@@ -1,5 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, ManyToOne, OneToMany} from "typeorm";
 import { User } from "./User";
+import { Post } from "./Post";
 
 @Entity()
 export class Comment {
@@ -13,9 +14,13 @@ export class Comment {
     @Column()
     likes: number;
 
-    @OneToOne(type => User)
+    @ManyToOne(type => User)
     @JoinColumn()
-    userId: number;
+    user: User;
+
+    @ManyToOne(type => Post, post => post.comment)
+    @JoinColumn({ name: "postId"})
+    post: Post;
     
     @CreateDateColumn()
     create_at: Date;

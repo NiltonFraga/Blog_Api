@@ -4,6 +4,8 @@ import * as jwt from 'jsonwebtoken';
 export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
     const auth = req.headers.authorization;
 
+    const params = req.params
+
     if(!auth || auth == 'Bearer'){
         return res.status(401).json({ message: 'Usuario não autenticado!'});
     }

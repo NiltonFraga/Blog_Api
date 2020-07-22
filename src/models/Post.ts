@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, OneToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, OneToMany, ManyToOne} from "typeorm";
 import { User } from "./User";
 import { Comment } from "./Comment";
 
@@ -17,13 +17,12 @@ export class Post {
     @Column()
     likes: number;
 
-    @OneToOne(type => User)
+    @ManyToOne(type => User)
     @JoinColumn()
-    userId: number;
+    user: number;
 
-    @OneToMany(type => Comment, comment => comment.id)
-    @JoinColumn()
-    commentId: Comment[];
+    @OneToMany(type => Comment, comment => comment.post)
+    comment: Comment[];
 
     @CreateDateColumn()
     create_at: Date;

@@ -15,7 +15,7 @@ export class User {
 
     @ManyToOne(type => Role)
     @JoinColumn()
-    role: number;
+    role: Role;
 
     @Column()
     age: number;
