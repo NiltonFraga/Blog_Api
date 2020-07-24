@@ -1,5 +1,5 @@
 import { getRepository as context } from "typeorm";
-import { isNumber, isUndefined, isNullOrUndefined, isNull } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
 import { Role } from '../../models/Role';
 
 export class RoleRepository{

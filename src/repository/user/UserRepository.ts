@@ -1,8 +1,7 @@
 import { User } from '../../models/User';
 import * as bcrypt from 'bcrypt';
 import { getRepository as context } from "typeorm";
-import { isNumber, isUndefined, isNullOrUndefined, isNull } from 'util';
-import { Role } from '../../models/Role';
+import { isNumber, isUndefined, isNullOrUndefined } from 'util';
 
 export class UserRepository{
     

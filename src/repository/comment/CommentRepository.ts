@@ -1,14 +1,20 @@
 import { getRepository as context } from "typeorm";
-import { isNumber, isUndefined, isNullOrUndefined, isNull } from 'util';
+import { isNullOrUndefined } from 'util';
 import { Comment } from '../../models/Comment';
-import { Post } from "../../models/Post";
 
 export class CommentRepository{
 
     public async show(id: string){
 
         const comment = await context(Comment).findOne(id, {
-            relations: ['user']
+            join: {
+                alias: "comment",
+                leftJoinAndSelect: {
+                    user: "comment.user",
+                    likes: "comment.likes",
+                    userLikes: "likes.user",
+                }
+            }
         });
         
         if(isNullOrUndefined(comment))
@@ -33,8 +39,6 @@ export class CommentRepository{
     }
 
     public async update(id: string, comment: Comment){
-
-        const verifyComment = await context(Comment).findOne(id);
 
         if(!comment.description)
             return 'O Comentario não pode ser em branco'

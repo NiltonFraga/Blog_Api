@@ -1,5 +1,5 @@
 import { getRepository as context } from "typeorm";
-import { isNumber, isUndefined, isNullOrUndefined, isNull } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
 import { Post } from '../../models/Post';
 
 export class PostRepository{
@@ -7,7 +7,17 @@ export class PostRepository{
     public async index(){
 
         const post = await context(Post).find({
-            relations: ['user', 'comment', 'likes']
+            join: {
+                alias: "post",
+                leftJoinAndSelect: {
+                    userPost: "post.user",
+                    likes: "post.likes",
+                    userLikePost: "likes.user",
+                    comment: "post.comment",
+                    userComment: "comment.user",
+                    userLikesComment: "comment.likes",
+                }
+            }
         })
 
         return post;
@@ -17,7 +27,17 @@ export class PostRepository{
     public async show(id: string){
 
         const post = await context(Post).findOne(id, {
-            relations: ['user', 'comment', 'likes']
+            join: {
+                alias: "post",
+                leftJoinAndSelect: {
+                    userPost: "post.user",
+                    likes: "post.likes",
+                    userLikePost: "likes.user",
+                    comment: "post.comment",
+                    userComment: "comment.user",
+                    userLikesComment: "comment.likes",
+                }
+            }
         });
         
         if(isNullOrUndefined(post))
@@ -34,7 +54,6 @@ export class PostRepository{
         const newPost = await context(Post).save({
             description: post.description,
             content: post.content,
-            likes: post.likes,
             user: post.user
         });
 
@@ -54,14 +73,11 @@ export class PostRepository{
         const oldPost = await context(Post).update(id, {
             description: post.description,
             content: post.content,
-            likes: verifyPost.likes,
             user: post.user,
         });
 
         if(oldPost.affected == 1)
-            return await context(Post).findOne(id, {
-                relations: ['user', 'comment']
-            });
+            return await context(Post).findOne(id);
         else
             return 'Parametros invalodos'
     }

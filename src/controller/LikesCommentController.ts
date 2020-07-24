@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { LikesCommentRepository } from '../repository/likesComment/LikesCommentRepository';
-import { isNullOrUndefined, isObject } from "util";
+import { isNullOrUndefined } from "util";
 
 const likesCommentRepository = new LikesCommentRepository();
 

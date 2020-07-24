@@ -1,6 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne } from "typeorm";
 import { User } from "./User";
-import { Post } from "./Post";
 import { Comment } from "./Comment";
 
 @Entity()
