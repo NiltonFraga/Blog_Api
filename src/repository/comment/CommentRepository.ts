@@ -24,7 +24,7 @@ export class CommentRepository{
         
         const newComment = await context(Comment).save({
             description: comment.description,
-            likes: 0,
+            likes: comment.likes,
             user: comment.user,
             post: comment.post
         });

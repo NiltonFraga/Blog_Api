@@ -7,7 +7,7 @@ export class PostRepository{
     public async index(){
 
         const post = await context(Post).find({
-            relations: ['user', 'comment']
+            relations: ['user', 'comment', 'likes']
         })
 
         return post;
@@ -17,7 +17,7 @@ export class PostRepository{
     public async show(id: string){
 
         const post = await context(Post).findOne(id, {
-            relations: ['user', 'comment']
+            relations: ['user', 'comment', 'likes']
         });
         
         if(isNullOrUndefined(post))
@@ -34,7 +34,7 @@ export class PostRepository{
         const newPost = await context(Post).save({
             description: post.description,
             content: post.content,
-            likes: 0,
+            likes: post.likes,
             user: post.user
         });
 
@@ -67,12 +67,12 @@ export class PostRepository{
     }
 
     public async remove(id: string){
-        
+
         const post = await context(Post).delete(id);
 
         if(post.affected == 1){
             await context(Post).findOne(id);
-            return 'Role removida' 
+            return 'Post removido' 
         }else{
             return null;
         }

@@ -1,8 +1,9 @@
 import {Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne} from "typeorm";
 import { User } from "./User";
+import { Post } from "./Post";
 
 @Entity()
-export class Likes {
+export class LikesPost {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -10,6 +11,10 @@ export class Likes {
     @ManyToOne(type => User)
     @JoinColumn()
     user: User;
+
+    @ManyToOne(type => Post, post => post.likes, {onDelete: "CASCADE"})
+    @JoinColumn()
+    post: Post;
 
     @CreateDateColumn()
     create_at: Date;

@@ -1,6 +1,7 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, OneToMany, ManyToOne} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, OneToMany, ManyToOne, ManyToMany, Like} from "typeorm";
 import { User } from "./User";
 import { Comment } from "./Comment";
+import { LikesPost } from "./LikesPost";
 
 @Entity()
 export class Post {
@@ -13,16 +14,17 @@ export class Post {
     
     @Column()
     content: string;
-    
-    @Column()
-    likes: number;
 
     @ManyToOne(type => User)
     @JoinColumn()
-    user: number;
+    user: User;
 
-    @OneToMany(type => Comment, comment => comment.post)
+    @OneToMany(type => Comment, comment => comment.post, {onDelete: "CASCADE"})
     comment: Comment[];
+
+    @OneToMany(type => LikesPost, likes => likes.post, { cascade: true })
+    @JoinColumn()
+    likes: LikesPost[];
 
     @CreateDateColumn()
     create_at: Date;
